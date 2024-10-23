@@ -9,17 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/exchange")
 public class ExchangeController {
 
     @Autowired
     private ExchangeService exchangeService;
-
-    @GetMapping("/status")
-    public String status() {
-        return "Working exchange status";
-    }
 
     /**
      * Get list of Exchanges
@@ -29,24 +26,43 @@ public class ExchangeController {
      */
     @GetMapping
     public Mono<ResponseEntity<Flux<Exchange>>> findAll() {
-        return Mono.just(
-                ResponseEntity.ok()
+        return Mono.just(ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .body(exchangeService.findAll()));
     }
 
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<Exchange>> read(@PathVariable Long id) {
+        return exchangeService.findById(id).map(customer -> ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .body(customer))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
-    public Mono<ResponseEntity<Mono<Exchange>>> create(@RequestBody Exchange exchange) {
-        return Mono.just(
-                ResponseEntity.ok()
-                        .body(exchangeService.create(exchange)));
+    public Mono<ResponseEntity<Exchange>> create(@RequestBody Exchange exchange) {
+        return exchangeService.create(exchange)
+                .map(exchangeCreated -> ResponseEntity.ok().body(exchangeCreated));
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Mono<Exchange>>> update(@RequestBody Exchange exchange,
+    public Mono<ResponseEntity<Exchange>> update(@RequestBody Exchange exchange,
                                                  @PathVariable Long id) {
-         return Mono.just(
-                ResponseEntity.ok()
-                        .body(exchangeService.update(exchange, id)));
+         return exchangeService.update(exchange, id)
+                 .map(exchangeUpdated -> ResponseEntity.ok().body(exchangeUpdated))
+                 .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Object>> delete(@PathVariable Long id) {
+        return exchangeService.delete(id)
+                .map(e -> ResponseEntity.noContent().build())
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/find")
+    public Mono<ResponseEntity<Exchange>> findByOriginDestinyCurrency(@RequestParam String origin,  @RequestParam String destiny) {
+        return exchangeService.findByOriginAndDestinyCurrency(origin, destiny)
+                .map(exchangeCreated -> ResponseEntity.ok().body(exchangeCreated));
     }
 }

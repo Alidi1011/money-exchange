@@ -1,18 +1,21 @@
 package com.aarteaga.ms_money_exchange.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
-//import javax.persistence.*;
-
 @Data
-@Table(name="exchange")
+@Table(name="transaction")
 @Entity
-public class Exchange {
+public class TransactionExchange {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    private String userId;
+    private String username;
+    private Double initialAmount;
+    private Double finalAmount;
+    private Double exchangeRate;
     private String originCurrency;
     private String destinyCurrency;
-    private Double exchangeRate;
 }
