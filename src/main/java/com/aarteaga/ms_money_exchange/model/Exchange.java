@@ -1,9 +1,8 @@
 package com.aarteaga.ms_money_exchange.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
-//import javax.persistence.*;
+import javax.persistence.*;
 
 @Data
 @Table(name="exchange")
