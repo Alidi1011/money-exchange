@@ -1,6 +1,7 @@
 package com.aarteaga.ms_money_exchange.security;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter{
+
+    @Value("${jwt.secret.key}")
+    private String jwtSecretKey;
 
     private final String HEADER = "Authorization";
     private final String PREFIX = "Bearer ";

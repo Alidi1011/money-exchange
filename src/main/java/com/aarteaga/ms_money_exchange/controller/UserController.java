@@ -3,7 +3,9 @@ package com.aarteaga.ms_money_exchange.controller;
 import com.aarteaga.ms_money_exchange.dto.GorestUserDto;
 import com.aarteaga.ms_money_exchange.dto.UserDto;
 import com.aarteaga.ms_money_exchange.service.GorestService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "User", description = "Operations for USER")
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Value("${jwt.secret.key}")
+    private String jwtSecretKey;
 
     @Autowired
     private GorestService gorestService;
@@ -53,7 +59,6 @@ public class UserController {
     }
 
     private String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                 .commaSeparatedStringToAuthorityList("ROLE_USER");
 
@@ -68,7 +73,7 @@ public class UserController {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 300000))
                 .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
+                        jwtSecretKey.getBytes()).compact();
 
         return token;
     }

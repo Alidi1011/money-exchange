@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @SpringBootApplication
 public class MsMoneyExchangeApplication {
@@ -28,6 +29,8 @@ public class MsMoneyExchangeApplication {
 					.authorizeRequests()
 					//.antMatchers(HttpMethod.POST, "/user").permitAll()
 					.antMatchers("/user/**").permitAll()
+					.requestMatchers(new AntPathRequestMatcher("/v3/**")).permitAll()
+					.requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
 					.anyRequest().authenticated();
 		}
 	}

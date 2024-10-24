@@ -8,6 +8,7 @@ import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,6 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 public class GorestServiceImpl implements GorestService{
+
+    @Value("${gorest.user.url}")
+    private String gorestUserUrl;
+
     @Override
     public List<GorestUserDto> findAll() throws IOException {
 
@@ -27,9 +32,7 @@ public class GorestServiceImpl implements GorestService{
                 .hostnameVerifier((hostname, session) -> true)
                 .connectTimeout(Long.parseLong("50000"), TimeUnit.SECONDS).build();
 
-        String url = "https://gorest.co.in/public/v2/users";
-
-        Request request = new Request.Builder().url(url).get()
+        Request request = new Request.Builder().url(gorestUserUrl).get()
                 .build();
 
         Call call = http.newCall(request);
@@ -53,9 +56,7 @@ public class GorestServiceImpl implements GorestService{
                 .hostnameVerifier((hostname, session) -> true)
                 .connectTimeout(Long.parseLong("50000"), TimeUnit.SECONDS).build();
 
-        String url = "https://gorest.co.in/public/v2/users/" + id;
-
-        Request request = new Request.Builder().url(url).get()
+        Request request = new Request.Builder().url(gorestUserUrl.concat(id)).get()
                 .build();
 
         Call call = http.newCall(request);
