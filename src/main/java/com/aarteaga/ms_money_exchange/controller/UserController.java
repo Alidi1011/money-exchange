@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDto login(@RequestParam("user") String username, @RequestParam("pwd") String password) throws IOException {
+    public Mono<UserDto> login(@RequestParam("user") String username, @RequestParam("pwd") String password) throws IOException {
 
         String token = getJWTToken(username);
 
@@ -55,7 +56,7 @@ public class UserController {
             user.setUsername("Invalid User");
             user.setToken("Invalid Access");
         }
-        return user;
+        return Mono.just(user);
     }
 
     private String getJWTToken(String username) {

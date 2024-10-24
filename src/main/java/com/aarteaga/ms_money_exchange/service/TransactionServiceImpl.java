@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
@@ -45,6 +46,7 @@ public class TransactionServiceImpl implements TransactionService{
                     transactionExchange.setFinalAmount(finalAmount);
                     transactionExchange.setExchangeRate(exchangeRate);
                     transactionExchange.setUsername(gorestUserDto.getName());
+                    transactionExchange.setTransactionDate(LocalDateTime.now());
                     transactionRepository.save(transactionExchange);
                     return transactionExchange;
                 });

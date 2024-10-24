@@ -4,6 +4,8 @@ package com.aarteaga.ms_money_exchange.model;
 import javax.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Table(name="transaction")
 @Entity
@@ -18,4 +20,5 @@ public class TransactionExchange {
     private Double exchangeRate;
     private String originCurrency;
     private String destinyCurrency;
+    private LocalDateTime transactionDate;
 }
