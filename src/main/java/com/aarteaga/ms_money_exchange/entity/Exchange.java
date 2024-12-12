@@ -1,4 +1,4 @@
-package com.aarteaga.ms_money_exchange.model;
+package com.aarteaga.ms_money_exchange.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

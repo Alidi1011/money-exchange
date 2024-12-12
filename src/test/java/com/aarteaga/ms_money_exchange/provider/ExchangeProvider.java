@@ -1,6 +1,6 @@
 package com.aarteaga.ms_money_exchange.provider;
 
-import com.aarteaga.ms_money_exchange.model.Exchange;
+import com.aarteaga.ms_money_exchange.entity.Exchange;
 
 import java.util.ArrayList;
 import java.util.List;

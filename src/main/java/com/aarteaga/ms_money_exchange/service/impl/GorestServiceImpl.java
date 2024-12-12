@@ -1,6 +1,7 @@
-package com.aarteaga.ms_money_exchange.service;
+package com.aarteaga.ms_money_exchange.service.impl;
 
 import com.aarteaga.ms_money_exchange.dto.GorestUserDto;
+import com.aarteaga.ms_money_exchange.service.GorestService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
-public class GorestServiceImpl implements GorestService{
+public class GorestServiceImpl implements GorestService {
 
     @Value("${gorest.user.url}")
     private String gorestUserUrl;

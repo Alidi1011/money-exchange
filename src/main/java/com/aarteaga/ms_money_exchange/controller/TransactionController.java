@@ -1,6 +1,6 @@
 package com.aarteaga.ms_money_exchange.controller;
 
-import com.aarteaga.ms_money_exchange.model.TransactionExchange;
+import com.aarteaga.ms_money_exchange.entity.TransactionExchange;
 import com.aarteaga.ms_money_exchange.service.TransactionService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

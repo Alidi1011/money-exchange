@@ -1,7 +1,8 @@
-package com.aarteaga.ms_money_exchange.service;
+package com.aarteaga.ms_money_exchange.service.impl;
 
-import com.aarteaga.ms_money_exchange.model.Exchange;
+import com.aarteaga.ms_money_exchange.entity.Exchange;
 import com.aarteaga.ms_money_exchange.repository.ExchangeRepository;
+import com.aarteaga.ms_money_exchange.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

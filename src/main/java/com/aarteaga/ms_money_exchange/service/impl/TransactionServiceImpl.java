@@ -1,9 +1,11 @@
-package com.aarteaga.ms_money_exchange.service;
+package com.aarteaga.ms_money_exchange.service.impl;
 
 import com.aarteaga.ms_money_exchange.dto.GorestUserDto;
-import com.aarteaga.ms_money_exchange.model.Exchange;
-import com.aarteaga.ms_money_exchange.model.TransactionExchange;
+import com.aarteaga.ms_money_exchange.entity.TransactionExchange;
 import com.aarteaga.ms_money_exchange.repository.TransactionRepository;
+import com.aarteaga.ms_money_exchange.service.ExchangeService;
+import com.aarteaga.ms_money_exchange.service.GorestService;
+import com.aarteaga.ms_money_exchange.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Service
-public class TransactionServiceImpl implements TransactionService{
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;

@@ -1,6 +1,6 @@
 package com.aarteaga.ms_money_exchange.controller;
 
-import com.aarteaga.ms_money_exchange.model.Exchange;
+import com.aarteaga.ms_money_exchange.entity.Exchange;
 import com.aarteaga.ms_money_exchange.service.ExchangeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

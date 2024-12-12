@@ -1,6 +1,6 @@
 package com.aarteaga.ms_money_exchange.service;
 
-import com.aarteaga.ms_money_exchange.model.Exchange;
+import com.aarteaga.ms_money_exchange.entity.Exchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

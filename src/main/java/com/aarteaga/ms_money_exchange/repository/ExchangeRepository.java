@@ -1,6 +1,6 @@
 package com.aarteaga.ms_money_exchange.repository;
 
-import com.aarteaga.ms_money_exchange.model.Exchange;
+import com.aarteaga.ms_money_exchange.entity.Exchange;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface  ExchangeRepository extends JpaRepository<Exchange, Long> {
