@@ -1,50 +1,44 @@
 package com.aarteaga.ms_money_exchange.controller;
 
-import com.aarteaga.ms_money_exchange.entity.OfferEntity;
-import com.aarteaga.ms_money_exchange.model.SaveOfferRequest;
+import com.aarteaga.ms_money_exchange.model.OfferDetail;
+import com.aarteaga.ms_money_exchange.model.OfferRequestSave;
+import com.aarteaga.ms_money_exchange.model.OfferResponse;
 import com.aarteaga.ms_money_exchange.service.OfferService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 @Slf4j
-@Tag(name = "Ofertas", description = "Offer API")
+@Api(tags = "Offer", description = "Registra y obtiene las ofertas")
+@Validated
 @RestController
-@RequestMapping("/offer")
+@RequestMapping("/offers")
+@RequiredArgsConstructor
 public class OfferController {
 
-    @Autowired
-    private OfferService offerService;
+    private final OfferService offerService;
 
-    private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
-    private final String SECRET = "mySecretKey";
-
-    @GetMapping
-    public Mono<ResponseEntity<Flux<OfferEntity>>> findAll() {
-        return Mono.just(ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .body(offerService.findAll()));
+    @GetMapping(value = "/retrieve")
+    public Flux<OfferDetail> findAll() {
+        return offerService.findAll();
     }
 
-    @PostMapping
-    public Mono<ResponseEntity<OfferEntity>> create(@RequestBody SaveOfferRequest saveOfferRequest) {
-        return offerService.create(saveOfferRequest)
-                .map(te -> ResponseEntity.ok().body(te));
+    @PostMapping(value = "/create")
+    public Mono<OfferResponse> create(@RequestBody @Valid OfferRequestSave saveOfferRequest) {
+        return offerService.create(saveOfferRequest);
     }
 
 
-    @PutMapping("/{id}")
-    public Mono<ResponseEntity<OfferEntity>> update(@RequestBody SaveOfferRequest saveOfferRequest,
-                                                    @PathVariable Integer id) {
-        return offerService.update(saveOfferRequest, id)
-                .map(offerEntityUpdated -> ResponseEntity.ok().body(offerEntityUpdated))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+    @PutMapping("/update/{id}")
+    public Mono<OfferResponse> update(@RequestBody OfferRequestSave saveOfferRequest,
+                                      @PathVariable(required = true, name = "id") @Valid Integer id) {
+        return offerService.update(saveOfferRequest, id);
     }
 }
 
